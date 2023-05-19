@@ -4,9 +4,9 @@ from torch import nn
 import numpy as np
 
 
-metric = evaluate.load("mean_iou")
-
 def compute_metrics(eval_pred, num_labels):
+    metric = evaluate.load("mean_iou")
+
     with torch.no_grad():
         logits, labels = eval_pred
         logits_tensor = torch.from_numpy(logits)
