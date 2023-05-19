@@ -11,7 +11,8 @@ def create_dataset(image_paths, label_paths):
     return dataset
 
 # load dataset
-folder = '/home/krish/Downloads/zenodo/extracted/full/PV03/PV03_Ground_Cropland'
+# folder = '/home/krish/Downloads/zenodo/extracted/full/PV03/PV03_Ground_Cropland'
+folder = os.environ['IMAGE_FOLDER_PATH']
 data = [os.path.join(folder, x) for x in os.listdir(folder)]
 
 images = sorted([x for x in data if 'label' not in x])
