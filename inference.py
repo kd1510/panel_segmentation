@@ -23,7 +23,7 @@ test_image = Image.open(test_image, mode="r").convert("RGB")
 processor_checkpoint = "nvidia/mit-b0"
 image_processor = AutoImageProcessor.from_pretrained(processor_checkpoint, reduce_labels=True)
 encoding = image_processor(test_image, return_tensors="pt")
-pixel_values = encoding.pixel_values.to('cuda')
+pixel_values = encoding.pixel_values
 outputs = model(pixel_values=pixel_values)
 logits = outputs.logits.cpu()
 upsampled_logits = nn.functional.interpolate(

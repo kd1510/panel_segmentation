@@ -1,14 +1,16 @@
 from transformers import AutoModelForSemanticSegmentation, TrainingArguments, Trainer
 from prepare_data import generate_train_val_ds
-from metrics import compute_metrics
+from metrics import prepare_compute_metrics
 from transforms import train_transforms, val_transforms
 
 checkpoint = "nvidia/mit-b0"
 model = AutoModelForSemanticSegmentation.from_pretrained(checkpoint)
 
+
 train_dataset, val_dataset = generate_train_val_ds()
-train_dataset = train_dataset.set_transform(train_transforms)
-val_dataset = val_dataset.set_transform(val_transforms)
+train_dataset.set_transform(train_transforms)
+val_dataset.set_transform(val_transforms)
+
 
 training_args = TrainingArguments(
     output_dir="segformer-b0-solar-panels",
@@ -32,7 +34,7 @@ trainer = Trainer(
     args=training_args,
     train_dataset=train_dataset,
     eval_dataset=val_dataset,
-    compute_metrics=compute_metrics,
+    compute_metrics=prepare_compute_metrics(50),
 )
 
 trainer.train()
